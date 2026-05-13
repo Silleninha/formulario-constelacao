@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Formulário Pré-Constelação — Silvia Mattos</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bordeaux: #7B2D3E;
+    --bordeaux-light: #F5EAED;
+    --bordeaux-mid: #9E4558;
+    --sage: #8A9E7E;
+    --sage-light: #E8EDE5;
+    --gold: #C4A96A;
+    --gold-light: #F0E8D5;
+    --off-white: #F8F4EF;
+    --dark: #2C2C2C;
+    --mid: #6B6B6B;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background-color: var(--off-white);
+    font-family: 'Jost', sans-serif;
+    color: var(--dark);
+    min-height: 100vh;
+  }
+
+  /* Grain texture overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.5;
+  }
+
+  .page {
+    max-width: 560px;
+    margin: 0 auto;
+    padding: 0 0 60px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Header */
+  .header {
+    background: var(--bordeaux);
+    padding: 48px 32px 36px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .header::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+
+  .header-decoration {
+    position: absolute;
+    top: -30px; right: -30px;
+    width: 120px; height: 120px;
+    border: 1px solid rgba(196,169,106,0.2);
+    border-radius: 50%;
+  }
+  .header-decoration::before {
+    content: '';
+    position: absolute;
+    inset: 15px;
+    border: 1px solid rgba(196,169,106,0.15);
+    border-radius: 50%;
+  }
+
+  .brand-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 32px;
+    color: #fff;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+  }
+
+  .brand-sub {
+    font-family: 'Jost', sans-serif;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 3px;
+    color: var(--gold);
+    text-transform: uppercase;
+  }
+
+  .form-title-bar {
+    background: var(--bordeaux-light);
+    border-bottom: 1px solid rgba(123,45,62,0.1);
+    padding: 20px 32px;
+    text-align: center;
+  }
+
+  .form-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--bordeaux);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .form-intro {
+    font-size: 13px;
+    font-weight: 300;
+    color: var(--mid);
+    line-height: 1.7;
+  }
+
+  /* Form body */
+  .form-body {
+    padding: 32px 28px;
+  }
+
+  .field-group {
+    margin-bottom: 32px;
+    animation: fadeUp 0.5s ease both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .field-group:nth-child(1) { animation-delay: 0.05s; }
+  .field-group:nth-child(2) { animation-delay: 0.1s; }
+  .field-group:nth-child(3) { animation-delay: 0.15s; }
+  .field-group:nth-child(4) { animation-delay: 0.2s; }
+  .field-group:nth-child(5) { animation-delay: 0.25s; }
+  .field-group:nth-child(6) { animation-delay: 0.3s; }
+  .field-group:nth-child(7) { animation-delay: 0.35s; }
+
+  .field-label {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+
+  .field-num {
+    width: 22px;
+    height: 22px;
+    min-width: 22px;
+    background: var(--bordeaux);
+    color: #fff;
+    border-radius: 50%;
+    font-size: 10px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1px;
+  }
+
+  .field-question {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--dark);
+    line-height: 1.5;
+  }
+
+  input[type="text"],
+  textarea {
+    width: 100%;
+    background: #fff;
+    border: 1px solid rgba(138,158,126,0.3);
+    border-bottom: 2px solid var(--sage);
+    border-radius: 6px 6px 0 0;
+    padding: 12px 14px;
+    font-family: 'Jost', sans-serif;
+    font-size: 14px;
+    font-weight: 300;
+    color: var(--dark);
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    -webkit-appearance: none;
+  }
+
+  input[type="text"]:focus,
+  textarea:focus {
+    border-bottom-color: var(--bordeaux);
+    box-shadow: 0 2px 0 0 var(--bordeaux);
+  }
+
+  textarea {
+    resize: vertical;
+    min-height: 100px;
+    line-height: 1.6;
+  }
+
+  /* Radio / Checkbox options */
+  .options {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .options.inline {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #fff;
+    border: 1px solid rgba(138,158,126,0.25);
+    border-radius: 8px;
+    padding: 11px 14px;
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .option:hover {
+    border-color: var(--sage);
+    background: var(--sage-light);
+  }
+
+  .option input[type="radio"],
+  .option input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    min-width: 16px;
+    accent-color: var(--bordeaux);
+    cursor: pointer;
+  }
+
+  .option span {
+    font-size: 13.5px;
+    font-weight: 300;
+    color: var(--dark);
+    line-height: 1.4;
+  }
+
+  .option.selected {
+    border-color: var(--bordeaux);
+    background: var(--bordeaux-light);
+  }
+
+  /* Open field after checkbox */
+  .open-field {
+    margin-top: 8px;
+    padding-left: 4px;
+  }
+
+  .open-field label {
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--mid);
+    display: block;
+    margin-bottom: 6px;
+    letter-spacing: 0.3px;
+  }
+
+  /* Divider */
+  .divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold-light), transparent);
+    margin: 4px 0 32px;
+  }
+
+  /* Submit */
+  .submit-area {
+    padding: 0 28px 8px;
+    text-align: center;
+  }
+
+  .btn-submit {
+    width: 100%;
+    background: var(--bordeaux);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 16px 24px;
+    font-family: 'Jost', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .btn-submit:hover { background: var(--bordeaux-mid); }
+  .btn-submit:active { transform: scale(0.98); }
+
+  .btn-submit svg {
+    width: 18px; height: 18px;
+    fill: currentColor;
+  }
+
+  .submit-note {
+    font-size: 11px;
+    color: var(--mid);
+    margin-top: 12px;
+    font-weight: 300;
+  }
+
+  /* Footer */
+  .footer {
+    background: var(--bordeaux);
+    padding: 16px;
+    text-align: center;
+    margin-top: 40px;
+  }
+
+  .footer-text {
+    font-size: 11px;
+    color: var(--gold);
+    letter-spacing: 2px;
+    font-weight: 400;
+    text-transform: uppercase;
+  }
+
+  /* Error state */
+  .field-group.error input,
+  .field-group.error textarea {
+    border-bottom-color: #c0392b;
+  }
+
+  .error-msg {
+    font-size: 11px;
+    color: #c0392b;
+    margin-top: 5px;
+    display: none;
+  }
+
+  .field-group.error .error-msg { display: block; }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="header-decoration"></div>
+    <div class="brand-name">Silvia Mattos</div>
+    <div class="brand-sub">Constelação Familiar · Mentorias Sistêmicas</div>
+  </div>
+
+  <!-- Title bar -->
+  <div class="form-title-bar">
+    <div class="form-title">Formulário Pré-Constelação Familiar</div>
+    <div class="form-intro">Este formulário me ajuda a saber o que você deseja Constelar.<br>Responda com calma — suas respostas ficam comigo, com total sigilo e respeito.</div>
+  </div>
+
+  <!-- Form -->
+  <form id="mainForm" novalidate>
+  <div class="form-body">
+
+    <!-- 1. Nome -->
+    <div class="field-group" id="group-nome">
+      <div class="field-label">
+        <div class="field-num">1</div>
+        <div class="field-question">Nome completo</div>
+      </div>
+      <input type="text" id="nome" placeholder="Seu nome" autocomplete="name">
+      <div class="error-msg">Por favor, preencha seu nome.</div>
+    </div>
+    <div class="divider"></div>
+
+    <!-- 2. Já foi Constelada -->
+    <div class="field-group" id="group-constelada">
+      <div class="field-label">
+        <div class="field-num">2</div>
+        <div class="field-question">Já foi Constelada alguma vez?</div>
+      </div>
+      <div class="options">
+        <label class="option">
+          <input type="radio" name="constelada" value="Sim, por você">
+          <span>Sim, por você</span>
+        </label>
+        <label class="option">
+          <input type="radio" name="constelada" value="Sim, por outra facilitadora">
+          <span>Sim, por outra facilitadora</span>
+        </label>
+        <label class="option">
+          <input type="radio" name="constelada" value="Não, nunca">
+          <span>Não, nunca</span>
+        </label>
+      </div>
+      <div class="error-msg">Por favor, selecione uma opção.</div>
+    </div>
+    <div class="divider"></div>
+
+    <!-- 3. Representante -->
+    <div class="field-group" id="group-representante">
+      <div class="field-label">
+        <div class="field-num">3</div>
+        <div class="field-question">Já participou como Representante em alguma Constelação?</div>
+      </div>
+      <div class="options inline">
+        <label class="option">
+          <input type="radio" name="representante" value="Sim">
+          <span>Sim</span>
+        </label>
+        <label class="option">
+          <input type="radio" name="representante" value="Não">
+          <span>Não</span>
+        </label>
+      </div>
+      <div class="error-msg">Por favor, selecione uma opção.</div>
+    </div>
+    <div class="divider"></div>
+
+    <!-- 4. Questão -->
+    <div class="field-group" id="group-questao">
+      <div class="field-label">
+        <div class="field-num">4</div>
+        <div class="field-question">Qual é a principal questão que você deseja Constelar?</div>
+      </div>
+      <textarea id="questao" placeholder="Conte com suas palavras..."></textarea>
+      <div class="error-msg">Por favor, descreva sua questão.</div>
+    </div>
+    <div class="divider"></div>
+
+    <!-- 5. Terapia -->
+    <div class="field-group" id="group-terapia">
+      <div class="field-label">
+        <div class="field-num">5</div>
+        <div class="field-question">Você faz algum tipo de terapia ou acompanhamento psicológico atualmente?</div>
+      </div>
+      <div class="options inline">
+        <label class="option">
+          <input type="radio" name="terapia" value="Sim">
+          <span>Sim</span>
+        </label>
+        <label class="option">
+          <input type="radio" name="terapia" value="Não">
+          <span>Não</span>
+        </label>
+      </div>
+      <div class="error-msg">Por favor, selecione uma opção.</div>
+    </div>
+    <div class="divider"></div>
+
+    <!-- 6. Medicamento -->
+    <div class="field-group" id="group-medicamento">
+      <div class="field-label">
+        <div class="field-num">6</div>
+        <div class="field-question">Você usa algum medicamento de uso contínuo para saúde emocional ou mental?</div>
+      </div>
+      <div class="options inline">
+        <label class="option">
+          <input type="radio" name="medicamento" value="Sim" id="med-sim">
+          <span>Sim</span>
+        </label>
+        <label class="option">
+          <input type="radio" name="medicamento" value="Não">
+          <span>Não</span>
+        </label>
+      </div>
+      <div class="open-field" id="med-qual-field" style="display:none">
+        <label>Qual?</label>
+        <input type="text" id="med-qual" placeholder="Nome do medicamento">
+      </div>
+      <div class="error-msg">Por favor, selecione uma opção.</div>
+    </div>
+    <div class="divider"></div>
+
+    <!-- 7. Detalhe família -->
+    <div class="field-group" id="group-familia">
+      <div class="field-label">
+        <div class="field-num">7</div>
+        <div class="field-question">Tem algum detalhe sobre você ou sua família que gostaria de me contar antes do nosso encontro?</div>
+      </div>
+      <textarea id="familia" placeholder="Opcional — compartilhe o que sentir vontade..."></textarea>
+    </div>
+
+  </div>
+
+  <!-- Submit -->
+  <div class="submit-area">
+    <button type="submit" class="btn-submit">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.125.558 4.126 1.534 5.855L.057 23.882l6.196-1.624A11.955 11.955 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.007-1.371l-.358-.214-3.724.976.993-3.638-.233-.373A9.818 9.818 0 1112 21.818z"/></svg>
+      Enviar para Silvia
+    </button>
+    <div class="submit-note">Ao clicar, o WhatsApp abrirá com suas respostas prontas para enviar.</div>
+  </div>
+  </form>
+
+  <!-- Footer -->
+  <div class="footer">
+    <div class="footer-text">@silviamattosoficial · Constelação Familiar · Mentorias Sistêmicas</div>
+  </div>
+
+</div>
+
+<script>
+  // Highlight selected options
+  document.querySelectorAll('.option input').forEach(input => {
+    input.addEventListener('change', function() {
+      const name = this.name;
+      document.querySelectorAll(`input[name="${name}"]`).forEach(r => {
+        r.closest('.option').classList.remove('selected');
+      });
+      this.closest('.option').classList.add('selected');
+    });
+  });
+
+  // Show/hide medicamento field
+  document.querySelectorAll('input[name="medicamento"]').forEach(r => {
+    r.addEventListener('change', function() {
+      const field = document.getElementById('med-qual-field');
+      field.style.display = this.value === 'Sim' ? 'block' : 'none';
+    });
+  });
+
+  // Form submit
+  document.getElementById('mainForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    let valid = true;
+
+    // Validate nome
+    const nome = document.getElementById('nome').value.trim();
+    const groupNome = document.getElementById('group-nome');
+    if (!nome) { groupNome.classList.add('error'); valid = false; }
+    else { groupNome.classList.remove('error'); }
+
+    // Validate constelada
+    const constelada = document.querySelector('input[name="constelada"]:checked');
+    const groupConstelada = document.getElementById('group-constelada');
+    if (!constelada) { groupConstelada.classList.add('error'); valid = false; }
+    else { groupConstelada.classList.remove('error'); }
+
+    // Validate representante
+    const representante = document.querySelector('input[name="representante"]:checked');
+    const groupRep = document.getElementById('group-representante');
+    if (!representante) { groupRep.classList.add('error'); valid = false; }
+    else { groupRep.classList.remove('error'); }
+
+    // Validate questao
+    const questao = document.getElementById('questao').value.trim();
+    const groupQuestao = document.getElementById('group-questao');
+    if (!questao) { groupQuestao.classList.add('error'); valid = false; }
+    else { groupQuestao.classList.remove('error'); }
+
+    // Validate terapia
+    const terapia = document.querySelector('input[name="terapia"]:checked');
+    const groupTerapia = document.getElementById('group-terapia');
+    if (!terapia) { groupTerapia.classList.add('error'); valid = false; }
+    else { groupTerapia.classList.remove('error'); }
+
+    // Validate medicamento
+    const medicamento = document.querySelector('input[name="medicamento"]:checked');
+    const groupMed = document.getElementById('group-medicamento');
+    if (!medicamento) { groupMed.classList.add('error'); valid = false; }
+    else { groupMed.classList.remove('error'); }
+
+    if (!valid) {
+      document.querySelector('.field-group.error').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return;
+    }
+
+    // Build message
+    const medQual = document.getElementById('med-qual').value.trim();
+    const medText = medicamento.value === 'Sim' && medQual
+      ? `Sim — ${medQual}`
+      : medicamento.value;
+
+    const familia = document.getElementById('familia').value.trim();
+
+    const msg = [
+      `*Formulário Pré-Constelação Familiar*`,
+      ``,
+      `*1. Nome:* ${nome}`,
+      `*2. Já foi Constelada?* ${constelada.value}`,
+      `*3. Já foi Representante?* ${representante.value}`,
+      `*4. Questão a Constelar:*`,
+      questao,
+      `*5. Faz terapia/acompanhamento?* ${terapia.value}`,
+      `*6. Medicamento contínuo?* ${medText}`,
+      familia ? `*7. Sobre mim/minha família:*\n${familia}` : `*7. Detalhes adicionais:* —`,
+    ].join('\n');
+
+    // Your WhatsApp number (Brazil format, no + or spaces)
+    const phone = '5511995006830';
+
+    const url = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
+    window.open(url, '_blank');
+  });
+</script>
+</body>
+</html>
